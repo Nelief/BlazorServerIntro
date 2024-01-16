@@ -1,0 +1,54 @@
+﻿@page "/teams"
+
+<h3>Teams Component</h3>
+
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th>
+                Team
+            </th>
+            <th>
+                Region
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var team in teams)
+        {
+            <tr>
+                <td>
+                    <a href="@($"/team/{team.Id}")" class="nav-link">@team.Name</a>
+                </td>
+                <td>
+                    @team.Region
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+@code {
+    private List<Team> teams;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        teams = new List<Team>();
+        teams.Add(new Team { Id = 1, Name = "Red", Region = "Region One" });
+        teams.Add(new Team { Id = 2, Name = "Yellow", Region = "Region Two" });
+        teams.Add(new Team { Id = 3, Name = "Blue", Region = "Region Three" });
+
+    }
+
+
+    public class Team
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Region { get; set; }
+    }
+}

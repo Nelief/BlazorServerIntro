@@ -1,0 +1,118 @@
+﻿@page "/"
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<p>
+    Name: @Person.SalesPerson 
+</p>
+
+<div class="row align-items-baseline mb-3">
+    <div class="col-1 text-center">
+       <label>
+            Locations
+       </label>
+    </div>
+    <div class="col-9">
+
+        <ul class="list-group list-group-horizontal">
+            @foreach (var location in Person.Locations)
+            {
+                <li class="list-group-item">@location.Id | @location.City | @location.ProvState | @location.Country</li>
+            }
+        </ul>
+    </div>
+</div>
+
+<div class="row d-flex align-baseline">
+    <div class="col-2">
+        Amount: @Person.Amount.ToString("c")
+    </div>
+    <div class="col-1">
+        <input class="form-control" type="number" @bind="Person.Amount" />
+    </div>
+</div>
+
+<div class="d-flex justify-content-start gap-2 mb-3">
+    @selectedGroup
+    <label>
+        <input type="radio"
+               value="1"
+               name="group"
+               checked="@(selectedGroup == 1)"
+               @onclick="@(() => selectedGroup = 1)" />1
+    </label>
+    <label>
+        <input type="radio"
+               value="2"
+               name="group"
+               checked="@(selectedGroup == 2)"
+               @onclick="@(() => selectedGroup = 2)" />2
+    </label>
+</div>
+
+<div class="row d-flex align-items-baseline mb-3">
+    <div class="col-2">
+        <select class="form-select" @bind="selectedLocationId">
+            <option value="0">Select a city</option>
+            @foreach (var loc in Person.Locations)
+            {
+                <option value="@loc.Id">@loc.City</option>
+            }
+        </select>
+    </div>
+    
+    <div class="col-1">
+        @if (selectedLocationId != 0)
+        {
+            @Person.Locations.FirstOrDefault(x => x.Id == selectedLocationId).City;
+        }
+    </div>
+</div>
+
+
+
+
+@code {
+    private IndexViewModel Person = null;
+    int selectedGroup = 1;
+    int selectedLocationId = 0; 
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Person = new IndexViewModel
+            {
+                SalesPerson = "Mauro",
+                Amount = 1000,
+                Locations = new List<Location>
+            {
+                new Location{ Id = 1, City = "Sorrento",ProvState="NA", Country="IT"},
+                new Location{ Id = 2, City = "Napoli",ProvState="NA", Country="IT"}
+            }
+            };
+    }
+
+    #region "View Model"
+
+    public class IndexViewModel
+    {
+        public string SalesPerson { get; set; }
+        public double Amount { get; set; }
+        public bool isActive { get; set; }
+        public List<Location> Locations;
+    }
+
+    public class Location
+    {
+        public int Id { get; set; }
+        public string City { get; set; }
+        public string ProvState { get; set; }
+        public string Country { get; set; }
+    }
+
+    #endregion
+}

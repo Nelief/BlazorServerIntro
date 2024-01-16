@@ -1,0 +1,34 @@
+﻿@using System.Timers
+@implements IDisposable
+
+<h6>@date.ToString("MM / dd / yyyy | HH:mm:ss")</h6>
+
+@code {
+    DateTime date;
+    Timer dateTimer;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        dateTimer = new Timer(1000);
+        dateTimer.Enabled = true;
+        dateTimer.AutoReset = true;
+        dateTimer.Elapsed += (sender, e) => Tick();
+
+    }
+    private void Tick()
+    {
+        date = DateTime.Now;
+        InvokeAsync(()=>
+        {
+            StateHasChanged();
+        });
+    }
+
+    public void Dispose()
+    {
+        dateTimer?.Dispose();
+    }
+    
+}

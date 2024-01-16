@@ -1,0 +1,31 @@
+﻿@if (display)
+{
+    <div>
+        <p role="status">Cascade Count :  @CounterValue </p>
+    </div>
+}
+
+
+@code {
+    [CascadingParameter(Name ="Counter")]
+    public int CounterValue { get; set; }
+
+    private bool display;
+
+    public void toggle()
+    {
+        if (display)
+        {
+            display = false;
+        }
+        else
+        {
+            display = true;
+        }
+
+        InvokeAsync(() =>
+        {
+            StateHasChanged();
+        });
+    }
+}

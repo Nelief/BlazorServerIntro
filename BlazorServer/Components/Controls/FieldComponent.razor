@@ -1,0 +1,13 @@
+﻿
+<div class="input-group mb-3 row">
+        <span class="input-group-text col-1 fw-bold" id="basic-addon1">@label</span>
+        @Control
+</div>
+
+@code {
+    [Parameter]
+    public string label { get; set; }
+
+    [Parameter]
+    public RenderFragment Control { get; set; }
+}

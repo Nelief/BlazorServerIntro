@@ -1,0 +1,15 @@
+﻿@page "/counter"
+<PageTitle>Counter</PageTitle>
+
+<p role="status">Parent Count : @parentCount </p>
+<Counter SetCurrentCount="SetCurrentCount"></Counter>
+
+@code {
+    private int parentCount; 
+
+    private void SetCurrentCount(int value)
+    {
+        parentCount = value;
+    }
+
+}

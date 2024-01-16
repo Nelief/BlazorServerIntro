@@ -1,0 +1,43 @@
+﻿@page "/person"
+@using System.ComponentModel.DataAnnotations
+
+<EditForm Model="person" OnValidSubmit="ValidSubmit">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+    <div class="row">
+        <div class="col-6">
+            <div class="input-group row d-flex align-items-baseline">
+                <label for="name" class="form-label input-group-text col-2 fw-bold">Nome</label>
+                <InputText id="name" @bind-Value="person.Name" class="form-control mb-3"></InputText>
+            </div>
+            <div class="input-group row d-flex align-items-baseline">
+                <label for="city" class="form-label input-group-text col-2 fw-bold">Città</label>
+                <InputText id="city" @bind-Value="person.City" class="form-control mb-3"></InputText>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Submit" />
+        </div>
+    </div>
+</EditForm>
+
+
+@code {
+
+
+    Person person = new Person();
+
+    public class Person()
+    {
+        [Required]
+        [Length(1, 50)]
+        public string Name { get; set; }
+
+        [Required]
+        [Length(1, 50)]
+        public string City { get; set; }
+    };
+
+    private void ValidSubmit()
+    {
+        var temp = person;
+    }
+}
